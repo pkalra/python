@@ -3,6 +3,19 @@ Created on Jun 16, 2014
 
 @author: pkalra
 '''
+# This script enables to find android application attributes by connecting to the 
+# google play store. Input is the package name. Output is application name, latest application version
+# and update date.  
+# lxml is the fastest html parsing library and improves performance
+# Inserting each record processed into the excel object increases memory usage linearly.
+# So, individual lists will be created for each of output attributes. The result will be written 
+# to excel using write_cloumn instead of writing each cell individually.
+# Code takes 4 mins(240 secs) to run.
+# Assumption is header will be provided in the input file. Hence, the for loop counter starts from the second record.
+# Risk - Google play store link or the page UI changes, the code needs to be modified.
+# Application name is derived from the 'document-title' attribute of html page.
+# Similarly, category from document-subtitle. Content contains couple of attributes. 
+# update date is the first attribute in content array and app version is fourth one.   
 
 #!/usr/bin/env python
 
