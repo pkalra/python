@@ -5,7 +5,8 @@ Created on Jun 16, 2014
 '''
 # This script enables to find android application attributes by connecting to the 
 # google play store. Input is the package name. Output is application name, latest application version
-# and update date.  
+# and update date. To run the code, place the python code file in the directory containing the input file. 
+# Output file will be created in the same directory as the python code file.   
 # lxml is the fastest html parsing library and improves performance
 # Inserting each record processed into the excel object increases memory usage linearly.
 # So, individual lists will be created for each of output attributes. The result will be written 
@@ -58,22 +59,24 @@ for app in input_sheet.col(0)[1:]:
     app_version.append(version)
     
     package_name.append(app.value)
+    break;
 
-header = list()
-header.append("Package Name")
-header.append("Application Name")
-header.append("Application category")
-header.append("Version Update Date")
-header.append("Latest Version") 
-
-output_file = xw.Workbook("App Names & Categories.xlsx")
-output_sheet1 = output_file.add_worksheet("Appname Map")  
-output_sheet1.write_row("A1", header)  
-output_sheet1.write_column('A2', package_name)
-output_sheet1.write_column('B2', app_name)
-output_sheet1.write_column('C2', app_category)
-output_sheet1.write_column('D2', app_update_date)  
-output_sheet1.write_column('E2', app_version)    
-
-output_file.close()   
+def write_to_excel(output_file_name):
+    output_file = xw.Workbook(output_file_name)
+    output_sheet1 = output_file.add_worksheet("Appname Map")  
+    header = list()
+    header.append("Package Name")
+    header.append("Application Name")
+    header.append("Application category")
+    header.append("Version Update Date")
+    header.append("Latest Version") 
+    output_sheet1.write_row("A1", header)  
+    output_sheet1.write_column('A2', package_name)
+    output_sheet1.write_column('B2', app_name)
+    output_sheet1.write_column('C2', app_category)
+    output_sheet1.write_column('D2', app_update_date)  
+    output_sheet1.write_column('E2', app_version)    
+    output_file.close()
+    
+write_to_excel("App Names & Categories.xlsx") 
 
